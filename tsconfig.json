@@ -1,18 +1,15 @@
 {
   "compilerOptions": {
-    "outDir": "./build/",
+    "allowJs": true,
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es2015",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./node_modules",
-    "./**/*.spec.ts"
-  ]
+  "awesomeTypescriptLoaderOptions": {
+    "useBabel": true,
+    "useCache": true
+  }
 }

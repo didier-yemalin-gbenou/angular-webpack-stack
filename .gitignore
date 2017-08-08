@@ -25,4 +25,8 @@ node_modules
 # production files
 build
 
+# reports
+reports/
 test-report.xml
+
+.awcache/

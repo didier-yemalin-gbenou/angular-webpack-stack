@@ -1,4 +1,5 @@
 const commonConfig = require('./webpack.config.common');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const webpackMerge = require('webpack-merge');
@@ -7,9 +8,15 @@ module.exports = webpackMerge(commonConfig, {
   bail: true,
   profile: true,
 
-  output: {
-    chunkFilename: '[hash].[id].chunk.js',
-    filename: '[name].[hash].bundle.js' // TODO cant use [chunkhash]?
+  module: {
+    rules: [
+      {
+        test: /\.(s*)css$/,
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ]
   },
 
   plugins: [
@@ -21,6 +28,11 @@ module.exports = webpackMerge(commonConfig, {
       compress: { screw_ie8: true }, // eslint-disable-line camelcase
       comments: false,
       sourceMap: true
+    }),
+
+    new ExtractTextPlugin({
+      filename: 'styles.[chunkhash].css',
+      allChunks: true
     })
   ]
 });

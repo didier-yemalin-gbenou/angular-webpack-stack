@@ -1,7 +1,12 @@
 const commonConfig = require('./webpack.config.common');
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 
 module.exports = webpackMerge(commonConfig, {
+
+  output: {
+    filename: '[name].[hash].bundle.js'
+  },
 
   devServer: {
     port: 9000,
@@ -15,5 +20,10 @@ module.exports = webpackMerge(commonConfig, {
     stats: {
       color: true
     }
-  }
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
+
 });
