@@ -50,9 +50,9 @@ angular-webpack-stack
 │   │
 │   └───components
 │   │     └───component1
-│   │           │   file111.component.ts
-│   │           │   file111.component.spec.ts
-│   │           │   file111.component.scss
+│   │           │   file111.ts
+│   │           │   file111.spec.ts
+│   │           │   file111.scss
 │   │           │   file111.html
 │   │
 │   │

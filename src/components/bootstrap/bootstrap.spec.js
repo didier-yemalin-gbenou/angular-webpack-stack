@@ -1,4 +1,4 @@
-import { BootstrapComponent } from './bootstrap.component';
+import { BootstrapComponent } from './bootstrap';
 
 describe('BootstrapComponent', () => {
   it('should be defined', () => {

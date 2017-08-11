@@ -8,17 +8,6 @@ module.exports = webpackMerge(commonConfig, {
   bail: true,
   profile: true,
 
-  module: {
-    rules: [
-      {
-        test: /\.(s*)css$/,
-        use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'sass-loader']
-        })
-      }
-    ]
-  },
-
   plugins: [
     new WebpackMd5Hash(),
 

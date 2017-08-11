@@ -1,0 +1,8 @@
+<div class='list-group contact-list text-left' *ngFor='let contact of contacts; let i = index' [attr.data-index]='i'>
+  <contact-info
+      [contact]='contact'
+      [id]='i'
+      [isActive]='isActive(i)'
+      (clickHandler)='handleClick($event)'
+  ></contact-info>
+</div>

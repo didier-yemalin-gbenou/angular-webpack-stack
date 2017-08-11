@@ -29,7 +29,6 @@ module.exports = {
 
   module: {
     rules: [
-      // All files with a '.ts' extension will be handled by 'awesome-typescript-loader'.
       {
         test: /\.ts$/,
         loaders: [
@@ -45,14 +44,12 @@ module.exports = {
         enforce: 'pre',
         loader: 'tslint-loader',
         exclude: /node_modules/
-      },
-      {
+      }, {
         test: /\.(s)css/,
-        loader: 'raw-loader!sass-loader'
-      },
-      {
+        loader: 'css-to-string-loader!raw-loader!sass-loader'
+      }, {
         test: /\.html$/,
-        loader: 'html-loader'
+        loader: 'html-loader?-minimize' // https://github.com/webpack-contrib/html-loader/issues/50#issuecomment-183688624
       }, {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=10000&mimetype=application/font-woff'
@@ -82,6 +79,12 @@ module.exports = {
     new webpack.ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)@angular/,
       path.resolve(__dirname, 'src')
-    )
+    ),
+
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      Tether: 'tether'
+    })
   ]
 };

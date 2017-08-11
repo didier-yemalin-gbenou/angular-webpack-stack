@@ -9,7 +9,8 @@ import '@angular/router';
 // RxJS
 import 'rxjs';
 
-// Other vendors for example jQuery, Lodash or Bootstrap
+import 'jquery';
+import 'bootstrap';
+import 'font-awesome-webpack';
+// Other vendors for example Lodash
 // You can import js, ts, css, sass, ...
-
-console.log('vendor.ts connected');
