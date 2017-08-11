@@ -1,5 +1,4 @@
-@import '~bootstrap/scss/bootstrap.scss';
-@import '../bootstrap/bootstrap.scss';
+  @import '../bootstrap/bootstrap.scss';
 
 .contact-info {
   overflow: hidden;
@@ -20,4 +19,9 @@
     max-height: 125%;
     max-width: 125%;
   }
+}
+
+.active-contact {
+  background-color: $activeBtn !important;
+  color: white;
 }

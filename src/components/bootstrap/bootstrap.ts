@@ -1,9 +1,13 @@
-import {Component} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'seed-webapp',
   templateUrl: './bootstrap.html',
-  styleUrls: ['./bootstrap.scss']
+  styleUrls: [
+    '../../../node_modules/bootstrap/scss/bootstrap.scss',
+     './bootstrap.scss'
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class BootstrapComponent {

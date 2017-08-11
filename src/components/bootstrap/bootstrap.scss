@@ -1,18 +1,13 @@
-@import '~bootstrap/scss/bootstrap.scss';
-
 $black: #000;
 $white: #ffffff;
 $activeBtn: #009688;
 
-.main {
-  display: block;
-  position: relative;
-  padding-top: 50px;
-  max-height: 72vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  .boot-class {
-    color: green;
+.app-bootstrap {
+  .main {
+    padding-top: 75px;
+    display: block;
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }

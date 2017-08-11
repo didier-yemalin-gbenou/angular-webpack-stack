@@ -7,14 +7,12 @@ import { Component } from '@angular/core';
 })
 
 export class FooterComponent {
-  private readonly startingYear: number = 2017;
-  private currentYear: number;
+  public copyright: string;
 
   constructor() {
-    this.currentYear = new Date().getFullYear();
-  }
+    const startingYear: number = 2017;
+    const currentYear: number = new Date().getFullYear();
 
-  public getCopyright(): string {
-    return `${this.startingYear} - ${this.currentYear}`;
+    this.copyright = startingYear === currentYear ? currentYear.toString() : `${startingYear} - ${currentYear}`;
   }
 }
