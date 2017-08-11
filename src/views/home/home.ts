@@ -37,10 +37,12 @@ export class HomeViewComponent {
   }
 
   public addNewContact(contact: ContactInterface) {
-    this.contacts.push(contact);
-    this.activeContact = contact;
-    this.activeContactId = this.contacts.length - 1;
-    this.isFormOpen = false;
+    if (contact.firstName) {
+      this.contacts.push(contact);
+      this.activeContact = contact;
+      this.activeContactId = this.contacts.length - 1;
+      this.isFormOpen = false;
+    }
   }
 
   public setActive(id: number) {
