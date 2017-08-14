@@ -10,7 +10,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
-import { HttpModule }    from '@angular/http';
+import { JsonpModule }    from '@angular/http';
 
 import { APP_ROUTES } from './routes';
 import ContactService from './services/contacts.service';
@@ -37,7 +37,7 @@ if (process.env.ENV === 'production') {
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     FormsModule,
-    HttpModule
+    JsonpModule
   ],
   declarations: [
     BootstrapComponent,

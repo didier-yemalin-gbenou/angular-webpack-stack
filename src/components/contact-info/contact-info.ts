@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import ContactService, { ContactInterface } from '../../services/contacts.service';
+import GravatarService from '../../services/gravatar.service';
 
 @Component({
   selector: 'contact-info',
@@ -19,10 +20,20 @@ export class ContactInfoComponent {
   public phone: string;
   public image: string;
 
-  constructor(private contactService: ContactService) {}
+  constructor(
+    private contactService: ContactService, private gravatarService: GravatarService
+  ) {}
 
   ngOnInit() {
     this.buildContact(this.contact, this.id);
+
+    if (this.email) {
+      this.gravatarService
+        .getAvatar(this.email)
+        .subscribe(data => {
+          this.image = data;
+        });
+    }
   }
 
   private buildContact(contact: ContactInterface, id: number) {
