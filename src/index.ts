@@ -28,7 +28,7 @@ import { ContactsListComponent } from './components/contacts-list/contacts-list'
 import { HomeViewComponent } from './views/home/home';
 import { AboutViewComponent } from './views/about/about';
 
-if (process.env.ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   enableProdMode();
 }
 

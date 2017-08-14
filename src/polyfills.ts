@@ -3,7 +3,7 @@ import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 import 'reflect-metadata';
 
-if (process.env.ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // Production
 } else {
   // Development
