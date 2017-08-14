@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ContactInterface } from '../../services/contacts.service';
 
@@ -8,7 +8,7 @@ import { ContactInterface } from '../../services/contacts.service';
   styleUrls: ['./contacts-list-form.scss']
 })
 
-export class ContactFormComponent {
+export class ContactFormComponent implements OnInit {
   @Output() onCancel: EventEmitter<string> = new EventEmitter();
   @Output() onAddNewContact: EventEmitter<ContactInterface> = new EventEmitter();
 
@@ -19,7 +19,9 @@ export class ContactFormComponent {
   public phone?: string;
   public submitted: boolean;
 
-  constructor() {
+  constructor() { }
+
+  ngOnInit() {
     this.submitted = false;
   }
 

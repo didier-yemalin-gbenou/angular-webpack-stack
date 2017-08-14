@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import ContactService, { ContactInterface } from '../../services/contacts.service';
 import GravatarService from '../../services/gravatar.service';
 
@@ -8,7 +8,7 @@ import GravatarService from '../../services/gravatar.service';
   styleUrls: ['./contact-info.scss']
 })
 
-export class ContactInfoComponent {
+export class ContactInfoComponent implements OnInit {
   @Input() contact: ContactInterface;
   @Input() id: number;
   @Input() isActive: boolean;
