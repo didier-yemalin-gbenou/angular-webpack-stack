@@ -64,6 +64,7 @@ class AppModule {
 // there is another implementation where only the components that change are reloaded
 // see https://github.com/angularclass/angular-hmr
 
+/* tslint:disable no-any */
 const decorateModuleRef = (modRef: any) => {
   const appRef = modRef.injector.get(ApplicationRef);
   const cmpRef = appRef.components[0];
