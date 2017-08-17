@@ -14,16 +14,12 @@ module.exports = webpackMerge(commonConfig, {
     historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
-      poll: 1000
+      poll: 1000,
+      ignored: /node_modules/
     },
     inline: true,
     stats: {
       color: true
     }
-  },
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
-
+  }
 });
