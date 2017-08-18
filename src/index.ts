@@ -1,8 +1,9 @@
+// hot reload modules
+import { removeNgStyles, createNewHosts, createInputTransfer, bootloader } from '@angularclass/hmr';
 // TODO, as of now I had to import polyfills due to error:
 // Uncaught reflect-metadata shim is required when using class decorators
-// Current fix refference:
+// Current fix reference:
 // https://github.com/angular/angular-cli/issues/2008#issuecomment-247366275
-
 import './polyfills';
 
 import { NgModule, ApplicationRef, enableProdMode } from '@angular/core';
@@ -26,6 +27,8 @@ import { ContactsListComponent } from './components/contacts-list/contacts-list'
 // views
 import { HomeViewComponent } from './views/home/home';
 import { AboutViewComponent } from './views/about/about';
+
+import { AppStore } from './app-store';
 
 if (process.env.NODE_ENV === 'production') {
   enableProdMode();
@@ -52,49 +55,54 @@ if (process.env.NODE_ENV === 'production') {
   bootstrap:    [ BootstrapComponent ],
   providers: [
     ContactService,
-    GravatarService
+    GravatarService,
+    AppStore
   ]
 })
 
 class AppModule {
+  constructor(public appRef: ApplicationRef, public appStore: AppStore) {
+    console.log(this.appRef, 'app ref');
+    console.log(this.appStore, 'app appStore');
+  }
+
+  /* tslint:disable no-any */
+  hmrOnInit(store: any) {
+    console.log('inside first');
+    if (!store || !store.state) { return; }
+    console.log('HMR store', JSON.stringify(store, null, 2));
+    // restore state
+    this.appStore.setState(store.state);
+    // restore input values
+    if ('restoreInputValues' in store) { store.restoreInputValues(); }
+    this.appRef.tick();
+    Object.keys(store).forEach(prop => delete store[prop]);
+  }
+
+  /* tslint:disable no-any */
+  hmrOnDestroy(store: any) {
+    const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
+    const currentState = this.appStore.getState();
+    store.state = currentState;
+    // recreate elements
+    store.disposeOldHosts = createNewHosts(cmpLocation);
+    // save input values
+    store.restoreInputValues  = createInputTransfer();
+    // remove styles
+    removeNgStyles();
+  }
+
+  /* tslint:disable no-any */
+  hmrAfterDestroy(store: any) {
+    console.log('inside first');
+    // display new elements
+    store.disposeOldHosts();
+    delete store.disposeOldHosts;
+  }
 }
 
-// Managing HMR with angular and dom events..
-// With this implementation the entire page reloads.
-// there is another implementation where only the components that change are reloaded
-// see https://github.com/angularclass/angular-hmr
-
-/* tslint:disable no-any */
-const decorateModuleRef = (modRef: any) => {
-  const appRef = modRef.injector.get(ApplicationRef);
-  const cmpRef = appRef.components[0];
-
-  enableDebugTools(cmpRef);
-  return modRef;
-};
-
-export function main(): Promise<any> {
-  return platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .then(decorateModuleRef)
-    .catch((err) => console.error(err));
+export function main() {
+  return platformBrowserDynamic().bootstrapModule(AppModule);
 }
 
-/**
- * Needed for hmr
- * in prod this is replace for document ready
- */
-switch (document.readyState) {
-  case 'loading':
-    document.addEventListener('DOMContentLoaded', _domReadyHandler, false);
-    break;
-  case 'interactive':
-  case 'complete':
-  default:
-    main();
-}
-
-function _domReadyHandler() {
-  document.removeEventListener('DOMContentLoaded', _domReadyHandler, false);
-  main();
-}
+bootloader(main);

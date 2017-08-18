@@ -1,5 +1,9 @@
 const commonConfig = require('./webpack.config.common');
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
+
+
+commonConfig.module.rules[0].loaders.unshift('@angularclass/hmr-loader');
 
 module.exports = webpackMerge(commonConfig, {
 
@@ -16,9 +20,13 @@ module.exports = webpackMerge(commonConfig, {
       poll: 1000,
       ignored: /node_modules/
     },
+    hot: true,
     inline: true,
     stats: {
       color: true
     }
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 });
