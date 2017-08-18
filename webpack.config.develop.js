@@ -2,7 +2,6 @@ const commonConfig = require('./webpack.config.common');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 
-
 commonConfig.module.rules[0].loaders.unshift('@angularclass/hmr-loader');
 
 module.exports = webpackMerge(commonConfig, {
