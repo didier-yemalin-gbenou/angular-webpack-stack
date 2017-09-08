@@ -6,7 +6,7 @@ import { AppStore } from '../../app-store';
 interface LocalStateInterface {
   contacts: ContactInterface[];
   currentIndex: number;
-
+  isFormOpen: boolean;
 }
 
 @Component({
@@ -16,47 +16,46 @@ interface LocalStateInterface {
 })
 
 export class HomeViewComponent {
-  public isFormOpen: boolean;
-  public activeContactId: number;
   public contacts: ContactInterface[];
   public activeContact: ContactInterface;
   public buildName: Function;
   private localState: LocalStateInterface;
 
   constructor(private _contactService: ContactService, private appStore: AppStore) {
-    this.isFormOpen = false;
     this.buildName = this._contactService.buildName;
 
     this.localState = {
       contacts: [],
-      currentIndex: null
+      currentIndex: null,
+      isFormOpen: false
     };
   }
 
   ngOnInit() {
-    const { contacts, currentIndex } = this.localState;
-
-    this.localState = this.appStore.getState();
-    this.activeContact = contacts.length > 0 ? contacts[currentIndex] : null;
+    this.localState = Object.assign({}, this.localState, this.appStore.getState().homeState);
+    this.setActive(this.localState.currentIndex);
   }
 
   public openForm() {
-    this.isFormOpen = true;
+    this.localState.isFormOpen = true;
+    this.updateState();
   }
 
   public cancelNewContact(res: string) {
     if (res === 'cancelAddContact') {
-      this.isFormOpen = false;
+      this.localState.isFormOpen = false;
     }
+    this.updateState();
   }
 
   public addNewContact(contact: ContactInterface) {
     if (contact.firstName) {
       this.addContact(contact);
       this.activeContact = contact;
-      this.activeContactId = this.localState.contacts.length - 1;
-      this.isFormOpen = false;
+      this.localState.currentIndex = this.localState.contacts.length - 1;
+      this.localState.isFormOpen = false;
     }
+    this.updateState();
   }
 
   public setActive(id: number) {
@@ -69,6 +68,15 @@ export class HomeViewComponent {
 
   private addContact(contact: ContactInterface) {
     this.localState.contacts.push(contact);
-    this.appStore.setState(this.localState);
+    this.updateState();
+  }
+
+  private updateState() {
+    const oldState = this.appStore.getState();
+    const newState = Object.assign({}, oldState, {
+      homeState: this.localState
+    });
+
+    this.appStore.setState(newState);
   }
 }

@@ -2,16 +2,30 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/distinctUntilChanged';
 
+// TS Interfaces
 import { ContactInterface } from './services/contacts.service';
 
-export interface State {
+interface HomeStateInterface {
   contacts: ContactInterface[];
   currentIndex: number;
+  isFormOpen: boolean;
+}
+
+interface ContactListFormState  extends ContactInterface {
+
+}
+
+export interface State {
+  homeState?: HomeStateInterface;
+  formState?: ContactListFormState;
 }
 
 const defaultState: State = {
-  contacts: [],
-  currentIndex: null
+  homeState: {
+    contacts: [],
+    currentIndex: null,
+    isFormOpen: false
+  }
 };
 
 const _store = new BehaviorSubject<State>(defaultState);

@@ -1,5 +1,5 @@
 <div class='container home'>
-  <div [hidden]='isFormOpen'>
+  <div [hidden]='localState.isFormOpen'>
     <div class='row'>
       <div class='col-12 text-center'>
         <button class='btn btn-success' (click)='openForm()'>Add contact</button>
@@ -7,7 +7,7 @@
     </div>
     <div class='row'>
       <div class='col-12 col-md-6 col-lg-4 text-center'>
-        <contacts-list [contacts]='getContacts()' [activeIndex]='activeContactId' (setActiveContact)='setActive($event)'></contacts-list>
+        <contacts-list [contacts]='getContacts()' [activeIndex]='localState.currentIndex' (setActiveContact)='setActive($event)'></contacts-list>
       </div>
       <div class='hidden-sm-down col' *ngIf='(!!activeContact)'>
         <div class='card'>
@@ -27,10 +27,9 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <div [hidden]='!isFormOpen'>
+  <div [hidden]='!localState.isFormOpen'>
     <contacts-list-form
         (onCancel)='cancelNewContact($event)'
         (onAddNewContact)='addNewContact($event)'

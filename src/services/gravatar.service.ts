@@ -36,8 +36,9 @@ export default class GravatarService {
 
         return data.entry[0].thumbnailUrl;
       })
-      .catch((error) => (
-        Observable.throw(error.json().error || 'No image in gravatar'))
-      );
+      .catch((error) => {
+        const err = error && error.json() ? error.json().error : 'No image in gravatar';
+        return Observable.throw(err);
+      });
   }
 }
