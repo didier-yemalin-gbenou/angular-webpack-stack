@@ -62,15 +62,14 @@ if (process.env.NODE_ENV === 'production') {
 
 class AppModule {
   constructor(public appRef: ApplicationRef, public appStore: AppStore) {
-    console.log(this.appRef, 'app ref');
-    console.log(this.appStore, 'app appStore');
+    console.log('app ref', this.appRef);
+    console.log('app appStore', this.appStore);
   }
 
   /* tslint:disable no-any */
   hmrOnInit(store: any) {
-    console.log('inside first');
     if (!store || !store.state) { return; }
-    console.log('HMR store', JSON.stringify(store, null, 2));
+    console.log('hmrOnInit: store', JSON.stringify(store, null, 2));
     // restore state
     this.appStore.setState(store.state);
     // restore input values
@@ -94,7 +93,6 @@ class AppModule {
 
   /* tslint:disable no-any */
   hmrAfterDestroy(store: any) {
-    console.log('inside first');
     // display new elements
     store.disposeOldHosts();
     delete store.disposeOldHosts;
